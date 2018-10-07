@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser'
 import express from 'express'
+import cors from 'cors'
 import favicon from 'serve-favicon'
 import fs from 'fs'
 import mongoose from 'mongoose'
@@ -61,79 +62,80 @@ if (config.enableNotifications) {
 	});
 }
 
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
+app.use(cors())
 app.use(compression());
 app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
-
-if (process.env.NODE_ENV === 'development') {
-	webpackConfig = require('./webpack.config.dev');
-	compiler = webpack(webpackConfig);
-	app.use(require('webpack-dev-middleware')(compiler, {
-		/*stats: {
-			colors: true
-		},*/
-		watchOptions: {
-			aggregateTimeout: 300,
-			poll: 1000
-		},
-		noInfo: true,
-		publicPath: webpackConfig.output.publicPath
-	})).use(require('webpack-hot-middleware')(compiler));
-	app.get(['/', '/vis/*'], function(req, res) {
-		const markup = ['<div style="color:orange;text-align:center">',
-							'<i class="fa fa-spinner fa-pulse fa-2x"></i>',
-						'</div>'].join("")
-		const css = ''
-		const vendor = ''
-		const initialState = ''
-		res.render('index', { initialState, markup, css, vendor })
-	});
-} else {
-	app.get(['/', '/vis/*'], function(req, res) {
-	//app.use((req, res) => {
-		const markup = require('./src/server/index').default
-		const css = '<link rel="stylesheet" href="/public/css/app.css">'
-		const vendor = '<script src="/public/js/vendor.js"></script>'
-		const context = {}
-		let lang = req.headers["accept-language"].split(",")[0]
-		lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang
-
-		if (context.url) {
-			res.writeHead(301, {
-				Location: context.url
-			})
-			res.end()
-		} else {
-			fs.readFile('./public/locale/' + lang + '/translation.json', {encoding: 'utf-8'}, function(err, data){
-				if (err) {
-					res.status(500).send(err);
-				} else {
-					const messages = JSON.parse(data)
-					const preloadedState = {
-						messages: { lang, messages }
-					}
-					let initialState = `
-						<script>
-							window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
-						</script>
-					`
-
-					res.render('index', {
-						initialState,
-						markup: markup(preloadedState, req, context),
-						css,
-						vendor
-					})
-				}
-			});
-		}
-	});
-}
-
-app.use('/public', express.static(path.join(__dirname, 'public')));
+// app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
+//
+// if (process.env.NODE_ENV === 'development') {
+// 	webpackConfig = require('./webpack.config.dev');
+// 	compiler = webpack(webpackConfig);
+// 	app.use(require('webpack-dev-middleware')(compiler, {
+// 		/*stats: {
+// 			colors: true
+// 		},*/
+// 		watchOptions: {
+// 			aggregateTimeout: 300,
+// 			poll: 1000
+// 		},
+// 		noInfo: true,
+// 		publicPath: webpackConfig.output.publicPath
+// 	})).use(require('webpack-hot-middleware')(compiler));
+// 	app.get(['/', '/vis/*'], function(req, res) {
+// 		const markup = ['<div style="color:orange;text-align:center">',
+// 							'<i class="fa fa-spinner fa-pulse fa-2x"></i>',
+// 						'</div>'].join("")
+// 		const css = ''
+// 		const vendor = ''
+// 		const initialState = ''
+// 		res.render('index', { initialState, markup, css, vendor })
+// 	});
+// } else {
+// 	app.get(['/', '/vis/*'], function(req, res) {
+// 	//app.use((req, res) => {
+// 		const markup = require('./src/server/index').default
+// 		const css = '<link rel="stylesheet" href="/public/css/app.css">'
+// 		const vendor = '<script src="/public/js/vendor.js"></script>'
+// 		const context = {}
+// 		let lang = req.headers["accept-language"].split(",")[0]
+// 		lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang
+//
+// 		if (context.url) {
+// 			res.writeHead(301, {
+// 				Location: context.url
+// 			})
+// 			res.end()
+// 		} else {
+// 			fs.readFile('./public/locale/' + lang + '/translation.json', {encoding: 'utf-8'}, function(err, data){
+// 				if (err) {
+// 					res.status(500).send(err);
+// 				} else {
+// 					const messages = JSON.parse(data)
+// 					const preloadedState = {
+// 						messages: { lang, messages }
+// 					}
+// 					let initialState = `
+// 						<script>
+// 							window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
+// 						</script>
+// 					`
+//
+// 					res.render('index', {
+// 						initialState,
+// 						markup: markup(preloadedState, req, context),
+// 						css,
+// 						vendor
+// 					})
+// 				}
+// 			});
+// 		}
+// 	});
+// }
+//
+// app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use("/api/translation", TranslationController);
 app.use("/api/key", KeyController);
 app.use("/api/count", CountController);
