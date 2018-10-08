@@ -28,6 +28,7 @@
     "isomorphic-fetch": "^2.2.1",
     "keys-translations-manager-core": "^1.5.0",
     "lodash": "^4.17.11",
+    "material-icons": "^0.2.3",
     "mongoose": "^5.2.17",
     "multiparty": "^4.2.1",
     "nodemon": "^1.18.4",
