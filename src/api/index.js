@@ -2,10 +2,10 @@ import config from '../../ktm.config.js'
 import axios from 'axios'
 
 const { hostname, port } = config.server
-const api =  `http://${hostname}:${port}`
+const Url =  `http://${hostname}:${port}`
 
 const getActiveProjects = () => {
-  return axios.get(`${api}/api/count/projects`)
+  return axios.get(`${Url}/api/count/projects`)
 }
 
 const getProjects = () => {
@@ -14,7 +14,12 @@ const getProjects = () => {
   }))
 }
 
+const getTranslations = (id) => {
+  return axios.get(`${Url}/api/vis/json/${id}`)
+}
+
 export {
+  getTranslations,
   getActiveProjects,
   getProjects
 }
