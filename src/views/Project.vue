@@ -3,6 +3,9 @@
     <div class="header">
       <h1>{{name}}</h1>
     </div>
+    <div class="progress">
+      <vs-progress :percent="completed"></vs-progress>
+    </div>
 
     <div class="translations">
       <vs-table search :data="translations" max-height="65vh">
@@ -39,7 +42,7 @@
 </template>
 <script>
 import { getTranslations } from '@/api'
-import _debounce from 'lodash/debounce'
+import { mapMutations } from 'vuex'
 
 export default {
   name: "Project",
@@ -52,7 +55,6 @@ export default {
     this.fetchTranslations(this.id)
   },
   data: () => ({
-    translations: null,
     search: ''
   }),
   computed: {
@@ -61,13 +63,22 @@ export default {
     },
     name() {
       return this.$store.getters.getProject(this.id).name
+    },
+    translations() {
+      return this.$store.state.translations.translations
+    },
+    completed() {
+      return (this.$store.getters.done.length / this.translations.length) * 100
     }
   },
   methods: {
+    ...mapMutations({
+      setTranslations: 'SET_TRANSLATIONS'
+    }),
     fetchTranslations(id) {
       getTranslations(id)
         .then((response) => {
-          this.translations = response.data
+          this.setTranslations(response.data)
         })
     },
     hasChanged(item, locale) {
