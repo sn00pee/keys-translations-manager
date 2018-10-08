@@ -9,18 +9,18 @@
     <div class="translations">
       <vs-table :data="translations">
         <template slot="thead">
-          <vs-th>
+          <vs-th sort-key="key">
             key
           </vs-th>
           <vs-th>
             description
           </vs-th>
-          <vs-th v-for="locale in locales" :key="locale">
+          <vs-th v-for="locale in locales" :key="locale" :sort-key="locale">
             {{locale}}
           </vs-th>
         </template>
         <template slot-scope="{data}">
-          <vs-tr v-for="(tr, indextr) in data">
+          <vs-tr v-for="(tr, indextr) in data" :key="indextr">
 
             <vs-td :data="tr.key">
               {{tr.key}}
