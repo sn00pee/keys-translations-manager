@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as config from '../../ktm.config'
 
 Vue.use(Vuex)
-import config from '../../ktm.config.js'
+
 export default new Vuex.Store({
   state: {
     locales: config.locales,

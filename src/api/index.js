@@ -1,5 +1,5 @@
-import config from '../../ktm.config.js'
 import axios from 'axios'
+import * as config from '../../ktm.config'
 
 const { hostname, port } = config.server
 const Url =  `http://${hostname}:${port}`
