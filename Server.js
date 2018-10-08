@@ -53,6 +53,11 @@ server.listen(config.server.port, config.server.hostname, function(err) {
 });
 if (config.enableNotifications) {
 	io.on('connection', function (socket) {
+
+		socket.on('keyUpdated', (item) => {
+			socket.broadcast.emit('keyUpdated', item)
+		})
+
 		socket.on('ktm', function (data) {
 			if (data && data.action === "datachanged") {
 				// sending to all clients except sender
