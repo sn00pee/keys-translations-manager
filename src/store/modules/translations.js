@@ -19,11 +19,8 @@ export default {
       state.translation.push(item)
     },
     UPDATE_TRANSLATION(state, item) {
-      state.translation
-        .find(translation => translation.key === item.key)
-        .map(translation => {
-          translation[item.locale] = item.value
-        })
+      state.translations
+        .find(translation => translation._id === item._id)[item.locale] = item.value
     },
     REMOVE_TRANSLATION(state, item) {
 
