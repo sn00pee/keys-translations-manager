@@ -14,12 +14,16 @@ const getProjects = () => {
   }))
 }
 
-const getTranslations = (id) => {
-  return axios.get(`${Url}/api/vis/json/${id}`)
+const getTranslations = (project) => {
+  return axios.get(`${Url}/api/vis/json/${project}`)
 }
 
+const updateTranslation = (_id, translation) => {
+  return axios.put(`${Url}/api/translation/${_id}`, translation)
+}
 export {
   getTranslations,
   getActiveProjects,
-  getProjects
+  getProjects,
+  updateTranslation
 }
