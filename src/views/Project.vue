@@ -24,12 +24,12 @@
               {{tr.key}}
             </vs-td>
 
-            <vs-td :data="tr[locale]" v-for="locale in locales" :key="locale">
+            <vs-td :data="tr[locale]" v-for="locale in locales" :key="locale" :ref="`${indextr}-${locale}`">
               {{tr[locale]}}
 
               <template slot="edit">
                 <div class="">
-                  <vs-input @change="hasChanged(tr, locale)" v-model="tr[locale]" class="inputx" :placeholder="locale"/>
+                  <vs-input @change="hasChanged(tr, locale, indextr)" v-model="tr[locale]" class="inputx" :placeholder="locale"/>
                   <p v-if="tr.description">description: {{tr.description}}</p>
                 </div>
               </template>
@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-import { getTranslations } from '@/api'
+import { getTranslations, updateTranslation } from '@/api'
 import { mapMutations } from 'vuex'
 
 export default {
@@ -81,14 +81,21 @@ export default {
           this.setTranslations(response.data)
         })
     },
-    hasChanged(item, locale) {
-      this.$socket.emit('keyUpdated', {
-        key: item.key,
-        project: item.project,
-        value: item[locale],
-        locale,
-
-      })
+    hasChanged(item, locale, index) {
+      updateTranslation(item._id, item)
+        .then((response) => {
+          this.$refs[`${index}-${locale}`][0].close()
+          this.$socket.emit('keyUpdated', {
+            key: item.key,
+            _id: item._id,
+            project: item.project,
+            value: item[locale],
+            locale,
+          })
+        })
+        .catch((error) => {
+          console.log(error.message)
+        })
     }
   }
 }

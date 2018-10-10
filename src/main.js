@@ -21,6 +21,10 @@ new Vue({
     },
     keyUpdated(item) {
       if (this.$route.name === 'project' && (item.project.indexOf(this.$route.params.id) > -1)) {
+        this.$store.commit(
+          'UPDATE_TRANSLATION',
+          item
+        )
         this.$vs.notify({
           title: `Key: ${item.key} Updated`,
           text: `${item.locale}: ${item.value}`
