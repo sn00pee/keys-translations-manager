@@ -35,7 +35,7 @@
 [License](#license) |
 [Questions?](#questions)
 
-> Keys-Translations Manager, a web application scaffolded with MERN stack, aims to facilitate locale management. With this application, you can:
+> Keys-Translations Manager, a web application scaffolded with MEVN stack, aims to facilitate locale management. With this application, you can:
 > * control and manage locales in one place,
 > * import locales from JSON (both nested/flat are supported) or Properties files,
 > * export locales to JSON (both nested/flat are supported) or Properties files,
@@ -94,7 +94,7 @@ See the [demo][20]
 
 
 ## Technologies
-* Scaffolded with [MongoDB][1], [Express][2], [React][3], and [Node.js][4]
+* Scaffolded with [MongoDB][1], [Express][2], [Vue.js][3], and [Node.js][4]
 * Styled with [Bootstrap][5] (theme: [SB Admin 2][7]) and [Less][6]
 * Visualization: [D3][19]
 * Real-Time Notifications: [Socket.IO][21]
@@ -118,7 +118,7 @@ Please don't hesitate to [open an issue](https://github.com/chejen/keys-translat
 [5]: http://getbootstrap.com/
 [6]: http://lesscss.org/
 [7]: http://startbootstrap.com/template-overviews/sb-admin-2/
-[8]: http://formatjs.io/react/
+[8]: http://vuejs.org
 [9]: https://webpack.github.io/
 [10]: https://mochajs.org/
 [11]: http://chaijs.com/
