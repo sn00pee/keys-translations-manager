@@ -17,7 +17,7 @@ export default new Router({
     {
       path: '/project/:id',
       name: 'project',
-      props: (route) => ({
+      props: route => ({
         id: route.params.id
       }),
       component: Project

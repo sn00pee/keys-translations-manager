@@ -1,11 +1,12 @@
 import Vue from 'vue'
+import VueSocketio from 'vue-socket.io';
 import Vuesax from 'vuesax'
-import 'vuesax/dist/vuesax.css' //Vuesax styles
+import 'vuesax/dist/vuesax.css' // Vuesax styles
 import 'material-icons/iconfont/material-icons.css'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import VueSocketio from 'vue-socket.io';
+
 
 Vue.use(VueSocketio, 'http://localhost:3000');
 
@@ -15,7 +16,7 @@ Vue.use(Vuesax)
 new Vue({
   router,
   store,
-  sockets:{
+  sockets: {
     connect() {
       console.log('socket connected')
     },

@@ -21,101 +21,102 @@ import config from '../ktm.config'
 
 export default class App extends React.PureComponent {
 	static propTypes = {
-		children: PropTypes.node,
-		lang: PropTypes.string.isRequired,
-		messages: PropTypes.object.isRequired,
-		counts: PropTypes.object.isRequired,
-		errors: PropTypes.array.isRequired,
-		translations: PropTypes.array,
-		showeditmodal: PropTypes.bool.isRequired,
-		showmergemodal: PropTypes.bool.isRequired,
-		showimportmodal: PropTypes.bool.isRequired,
-		showmessagepopup: PropTypes.bool.isRequired,
-		emitdatachange: PropTypes.bool.isRequired,
-		reloaddata: PropTypes.bool.isRequired,
-		editrecord: PropTypes.object.isRequired,
-		keys: PropTypes.object.isRequired,
-		mergeable: PropTypes.array.isRequired,
+	  children: PropTypes.node,
+	  lang: PropTypes.string.isRequired,
+	  messages: PropTypes.object.isRequired,
+	  counts: PropTypes.object.isRequired,
+	  errors: PropTypes.array.isRequired,
+	  translations: PropTypes.array,
+	  showeditmodal: PropTypes.bool.isRequired,
+	  showmergemodal: PropTypes.bool.isRequired,
+	  showimportmodal: PropTypes.bool.isRequired,
+	  showmessagepopup: PropTypes.bool.isRequired,
+	  emitdatachange: PropTypes.bool.isRequired,
+	  reloaddata: PropTypes.bool.isRequired,
+	  editrecord: PropTypes.object.isRequired,
+	  keys: PropTypes.object.isRequired,
+	  mergeable: PropTypes.array.isRequired,
 
-		MessageActions: PropTypes.object.isRequired,
-		CountActions: PropTypes.object.isRequired,
-		TranslationActions: PropTypes.object.isRequired,
-		KeyActions: PropTypes.object.isRequired,
-		ErrorActions: PropTypes.object.isRequired,
-		SocketActions: PropTypes.object.isRequired,
-		ComponentActions: PropTypes.object.isRequired
+	  MessageActions: PropTypes.object.isRequired,
+	  CountActions: PropTypes.object.isRequired,
+	  TranslationActions: PropTypes.object.isRequired,
+	  KeyActions: PropTypes.object.isRequired,
+	  ErrorActions: PropTypes.object.isRequired,
+	  SocketActions: PropTypes.object.isRequired,
+	  ComponentActions: PropTypes.object.isRequired
 	}
 
 	static childContextTypes = {
-		config: PropTypes.object,
-		socket: PropTypes.object
+	  config: PropTypes.object,
+	  socket: PropTypes.object
 	}
 
 	constructor(props) {
-		super(props);
-		this.state = { socket: null }
+	  super(props);
+	  this.state = { socket: null }
 	}
 
 	getChildContext() {
-		return { config, socket: this.state.socket }
+	  return { config, socket: this.state.socket }
 	}
 
 	componentWillMount() {
-		if (this.props.lang) {
-			localeUtil.setMessages(this.props.messages);
-		}
+	  if (this.props.lang) {
+	    localeUtil.setMessages(this.props.messages);
+	  }
 	}
 
-	componentDidMount() {//Invoked once, only on the client
-		const me = this;
-		if (config.enableNotifications) {
-			me.setSocket();
-		}
-		if (!this.props.lang) {
-			let lang = navigator.language || navigator.browserLanguage;
-			lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang;
-			this.loadMessages(lang);
-		}
+	componentDidMount() { // Invoked once, only on the client
+	  const me = this;
+	  if (config.enableNotifications) {
+	    me.setSocket();
+	  }
+	  if (!this.props.lang) {
+	    let lang = navigator.language || navigator.browserLanguage;
+	    lang = (LANGUAGES.indexOf(lang) === -1) ? 'en-US' : lang;
+	    this.loadMessages(lang);
+	  }
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.lang !== this.props.lang) {
-			localeUtil.setMessages(nextProps.messages);
-		}
-		if (nextProps.emitdatachange && config.enableNotifications && this.state.socket) {
-			this.state.socket.emit('ktm', { action: 'datachanged' });
-			this.props.SocketActions.endDataChange();
-		}
+	  if (nextProps.lang !== this.props.lang) {
+	    localeUtil.setMessages(nextProps.messages);
+	  }
+	  if (nextProps.emitdatachange && config.enableNotifications && this.state.socket) {
+	    this.state.socket.emit('ktm', { action: 'datachanged' });
+	    this.props.SocketActions.endDataChange();
+	  }
 	}
 
 	setSocket() {
-		const me = this;
-		let socket;
-		socket = io.connect('/');
-		socket.on('ktm', function (data) {
-			if (data && data.action === "datachanged") {
-				me.props.ComponentActions.showMessagePopup();
-			}
-		});
-		this.setState({ socket });
+	  const me = this;
+	  let socket;
+	  socket = io.connect('/');
+	  socket.on('ktm', (data) => {
+	    if (data && data.action === 'datachanged') {
+	      me.props.ComponentActions.showMessagePopup();
+	    }
+	  });
+	  this.setState({ socket });
 	}
 
 	loadMessages(lang) {
-		this.props.MessageActions.loadMessages(lang);
+	  this.props.MessageActions.loadMessages(lang);
 	}
 
 	render() {
-		const {
-			MessageActions, TranslationActions, CountActions,
-			KeyActions, ErrorActions, ComponentActions,
-			lang, messages, counts, errors,
-			translations, showeditmodal, editrecord, reloaddata,
-			showmergemodal, keys, mergeable,
-			showimportmodal, showmessagepopup } = this.props
+	  const {
+	    MessageActions, TranslationActions, CountActions,
+	    KeyActions, ErrorActions, ComponentActions,
+	    lang, messages, counts, errors,
+	    translations, showeditmodal, editrecord, reloaddata,
+	    showmergemodal, keys, mergeable,
+	    showimportmodal, showmessagepopup
+	  } = this.props
 
-		return (
+	  return (
 			<div id="wrapper">
-				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
+				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
 					<Header/>
 					<DropdownMenu lang={lang} messages={messages}
 						loadMessages={MessageActions.loadMessages}
@@ -167,7 +168,7 @@ export default class App extends React.PureComponent {
 					</MainPanel>
 				</div>
 				<MessagePopup messages={messages}
-						msg={localeUtil.getMsg("ui.tip.dataChanged")}
+						msg={localeUtil.getMsg('ui.tip.dataChanged')}
 						closeMessagePopup={ComponentActions.closeMessagePopup}
 						showmessagepopup={showmessagepopup}>
 					<b><u>
@@ -176,10 +177,10 @@ export default class App extends React.PureComponent {
 								event.preventDefault();
 							}
 							ComponentActions.reloadData();
-						}}>{localeUtil.getMsg("ui.common.reload")}</a>
+						}}>{localeUtil.getMsg('ui.common.reload')}</a>
 					</u></b>
 				</MessagePopup>
 			</div>
-		);
+	  );
 	}
 }

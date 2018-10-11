@@ -3,6 +3,7 @@ root = true
 [*]
 charset = utf-8
 trim_trailing_whitespace = true
+end_of_line = lf
 
 [*.{js,json,css,less}]
 indent_style = space
