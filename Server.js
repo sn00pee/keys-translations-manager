@@ -26,7 +26,7 @@ let webpackConfig,
 
 mongoose.Promise = global.Promise; //mpromise (mongoose's default promise library) is deprecated
 mongoose.connect(config.database, {
-	useMongoClient: true, //http://mongoosejs.com/docs/connections.html#use-mongo-client
+	useNewUrlParser: true,
 	socketTimeoutMS: 90000,
 	connectTimeoutMS: 90000
 }, function(err) {
@@ -46,9 +46,9 @@ server.listen(config.server.port, config.server.hostname, function(err) {
 	}
 
 	if (process.env.NODE_ENV === 'development') {
-		log('info', 'Dev-server (at http://localhost:3000) is starting, please wait ...');
+		log('info', `Dev-server (at http://${config.server.hostname}:${config.server.port}) is starting, please wait ...`);
 	} else {
-		log('info', 'The server (at http://localhost:3000) has started.');
+		log('info', `The server (at http://${config.server.hostname}:${config.server.port}) has started.`);
 	}
 });
 if (config.enableNotifications) {
