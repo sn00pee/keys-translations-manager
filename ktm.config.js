@@ -14,12 +14,12 @@ module.exports = {
     {
       id: 'p1',
       name: 'Project A',
-      locales: ['en', 'ja']
+			base: 'en'
     },
     {
       id: 'p2',
       name: 'Project B',
-      locales: ['en', 'zh-tw']
+			base: 'en'
     }
   ],
   enableNotifications: true
