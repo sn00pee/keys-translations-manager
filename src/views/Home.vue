@@ -14,7 +14,7 @@ import { getProjects } from '@/api'
 
 export default {
   name: "Home",
-  mounted() {
+  created() {
     this.fetchProjects()
   },
   data: () => ({
