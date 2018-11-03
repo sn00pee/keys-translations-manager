@@ -1,7 +1,6 @@
 {
-  "name": "keys-translations-manager",
-  "version": "1.4.0",
-  "private": true,
+  "name": "vue-keys-translations-manager",
+  "version": "0.1.0",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -84,7 +83,7 @@
     "localization",
     "multilingual",
     "translation",
-    "MERN"
+    "MEVN"
   ],
   "author": "chejen",
   "description": "A web application for locale's keys and translations management.",
