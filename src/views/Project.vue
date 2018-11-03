@@ -43,6 +43,10 @@
 <script>
 import { getTranslations, updateTranslation } from '@/api'
 import { mapMutations } from 'vuex'
+import {
+  LOAD_TRANSLATIONS,
+  SET_PROJECT
+} from '@/constants/ActionTypes'
 
 export default {
   name: "Project",
@@ -59,7 +63,7 @@ export default {
   }),
   computed: {
     locales() {
-      return this.$store.state.locales
+      return this.$store.state.locales.locales
     },
     name() {
       return this.$store.getters.getProject(this.id).name
@@ -73,11 +77,13 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setTranslations: 'SET_TRANSLATIONS'
+      setTranslations: LOAD_TRANSLATIONS,
+      setProject: SET_PROJECT
     }),
     fetchTranslations(id) {
       getTranslations(id)
         .then((response) => {
+          this.setProject(id)
           this.setTranslations(response.data)
         })
     },
