@@ -6,11 +6,11 @@ import fs from 'fs'
 import mongoose from 'mongoose'
 import path from 'path'
 import compression from 'compression'
-import webpack from 'webpack'
 import logUtil from 'keys-translations-manager-core/lib/logUtil'
 import config from './ktm.config'
 import { LANGUAGES } from './src/constants/Languages'
 import TranslationController from './src/controllers/TranslationController'
+import HistoryController from './src/controllers/HistoryController'
 import KeyController from './src/controllers/KeyController'
 import CountController from './src/controllers/CountController'
 import DownloadController from './src/controllers/DownloadController'
@@ -18,6 +18,7 @@ import ImportController from './src/controllers/ImportController'
 import VisController from './src/controllers/VisController'
 
 const log = logUtil.log,
+	port = process.env.PORT || 3000,
 	app = express(),
 	server = require('http').Server(app),
 	io = require('socket.io')(server);
@@ -29,17 +30,18 @@ mongoose.connect(config.database, {
 	useNewUrlParser: true,
 	socketTimeoutMS: 90000,
 	connectTimeoutMS: 90000
-}, function(err) {
-	if (err) {
+}).then(
+	() => {
+		// console.log('Connect to database successfully.');
+	},
+	err => {
 		log('error', 'Failed to connect database');
 		log('error', err);
 		process.exit(1);
-	//} else {
-	//	console.log('Connect to database successfully.');
 	}
-});
+);
 
-server.listen(config.server.port, config.server.hostname, function(err) {
+server.listen(port, err => {
 	if (err) {
 		log('error', err);
 		process.exit(1);
@@ -142,6 +144,7 @@ app.use(bodyParser.json());
 //
 // app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use("/api/translation", TranslationController);
+app.use("/api/history", HistoryController);
 app.use("/api/key", KeyController);
 app.use("/api/count", CountController);
 app.use("/api/download", DownloadController);

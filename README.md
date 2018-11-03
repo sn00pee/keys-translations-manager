@@ -20,12 +20,17 @@ The front and the server are ran separately (temporarily)
 
 
 ## Custom
-There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure. The table below lists the available ones:
+There are several environment variables you can configure:
+
+| **Variable** | **Description** |**Default**|
+|----------|-------|---|
+|  PORT  |   Web server's port    | ```3000```  |
+|  DB  |   MongoDB connection URI    | ```mongodb://localhost:27017/translationdb```  |
+
+There are some other settings (in [ktm.config.js](./ktm.config.js)) you can configure. The table below lists the available ones:
 
 | **Setting** | **Description** |**Default**|
 |----------|-------|---|
-|  server  |   Web server's hostname and port    | ```{ hostname: 'localhost', port: 3000 }```  |
-|  database  |   MongoDB connection URI    | ```'mongodb://localhost:27017/translationdb'```  |
 |  locales  |   The locales need to be managed. (You can add or remove locales arbitrarily.)    | ```['en-US', 'zh-TW']```  |
 |  projects  |   The projects need to be localized. (You can add or remove projects arbitrarily.)    | ```[{id: 'p1',      name: 'Project A', base: 'en' }, { id: 'p2', name: 'Project B', base: 'en' } ]```  |
 |  enableNotifications  |   Push real-time notifications to users    | ```true```  |  

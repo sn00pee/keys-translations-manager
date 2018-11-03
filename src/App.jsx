@@ -1,6 +1,7 @@
 import io from 'socket.io-client'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { hot } from 'react-hot-loader'
 import { Route } from 'react-router-dom'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import AlertPanel from './components/input/AlertPanel'
@@ -11,15 +12,17 @@ import MainPanel from './components/layout/MainPanel'
 import SideBar from './components/layout/SideBar'
 import MessagePopup from './components/layout/MessagePopup'
 import OutputPanel from './components/output/OutputPanel'
+import HistoryModal from './components/history/HistoryModal'
 import EditModal from './components/input/EditModal'
 import MergeModal from './components/merge/MergeModal'
 import ImportModal from './components/import/ImportModal'
 import TablePanel from './components/grid/TablePanel'
+import ConfirmModal from './components/grid/ConfirmModal'
 import VisContainer from './containers/VisContainer'
 import { LANGUAGES } from './constants/Languages'
 import config from '../ktm.config'
 
-export default class App extends React.PureComponent {
+class App extends React.PureComponent {
 	static propTypes = {
 	  children: PropTypes.node,
 	  lang: PropTypes.string.isRequired,
@@ -149,6 +152,18 @@ export default class App extends React.PureComponent {
 							updateTranslation={TranslationActions.updateTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
+						<ConfirmModal data={editrecord}
+							showconfirmmodal={showconfirmmodal}
+							closeConfirmModal={ComponentActions.closeConfirmModal}
+							removeTranslation={TranslationActions.removeTranslation}
+						/>
+						<HistoryModal translation={editrecord}
+							showhistorymodal={showhistorymodal}
+							historylog={historylog}
+							historystatus={historystatus}
+							closeHistoryModal={ComponentActions.closeHistoryModal}
+							loadHistory={HistoryActions.loadHistory}
+						/>
 						<Route exact path="/" render={() => (
 							<TablePanel messages={messages}
 								translations={translations}
@@ -184,3 +199,5 @@ export default class App extends React.PureComponent {
 	  );
 	}
 }
+
+export default hot(module)(App)
