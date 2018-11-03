@@ -1,24 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as config from '../../ktm.config'
 import translations from './modules/translations'
+import projects from './modules/projects'
+import locales from './modules/locales'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    translations
+    translations,
+    projects,
+    locales
   },
-  state: {
-    locales: config.locales,
-    projects: config.projects,
-
-  },
-  getters: {
-    getProject: (state) => (id) => {
-      return state.projects.find(project => project.id === id)
-    }
-  },
-  mutations: {},
-  actions: {},
 })
