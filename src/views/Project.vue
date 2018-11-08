@@ -41,8 +41,8 @@
   </div>
 </template>
 <script>
-import { getTranslations, updateTranslation } from '@/api'
-import { mapMutations } from 'vuex'
+import { getTranslations } from '@/api'
+import { mapMutations, mapActions } from 'vuex'
 import {
   LOAD_TRANSLATIONS,
   SET_PROJECT
@@ -80,6 +80,9 @@ export default {
       setTranslations: LOAD_TRANSLATIONS,
       setProject: SET_PROJECT
     }),
+    ...mapActions({
+      save: 'update'
+    }),
     fetchTranslations(id) {
       getTranslations(id)
         .then((response) => {
@@ -88,8 +91,8 @@ export default {
         })
     },
     hasChanged(item, locale, index) {
-      updateTranslation(item._id, item)
-        .then((response) => {
+      this.save(item)
+        .then(() => {
           this.$refs[`${index}-${locale}`][0].close()
           this.$socket.emit('keyUpdated', {
             key: item.key,
@@ -99,8 +102,8 @@ export default {
             locale,
           })
         })
-        .catch((error) => {
-          console.log(error.message)
+        .catch((message) => {
+          console.log(message)
         })
     }
   }

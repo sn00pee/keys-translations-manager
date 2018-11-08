@@ -1,4 +1,4 @@
-const getTotal = (total, value) => total + value
+import { updateTranslation } from '@/api'
 import {
   ADD_TRANSLATION,
   LOAD_TRANSLATIONS,
@@ -6,21 +6,36 @@ import {
   UPDATE_TRANSLATION
 } from '@/constants/ActionTypes'
 
+const getTotal = (total, value) => total + value
+
 export default {
   state: {
     translations: [],
   },
   getters:{
-    empty: (state, rootState) => {
+    empty: (state, getters, rootState) => {
       return state.translations.map(translation => {
-        return rootState.locales.map(locale => translation[locale] === '')
+        return rootState.locales.locales.map(locale => translation[locale] === '')
       })
     },
     done: (state) => {
       return state.translations.filter(item => item.ja && item.ja !== '')
     }
   },
-  actions: {},
+  actions: {
+    update ({ commit, state }, translation) {
+      return new Promise((resolve, reject) => {
+        updateTranslation(translation._id, translation)
+          .then((response) => {
+            commit(UPDATE_TRANSLATION, translation)
+            resolve()
+          })
+          .catch((error) => {
+            reject(error.message)
+          })
+      })
+    }
+  },
   mutations: {
     [LOAD_TRANSLATIONS](state, translations) {
       state.translations = translations

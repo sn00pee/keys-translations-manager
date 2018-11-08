@@ -21,6 +21,7 @@ const getTranslations = (project) => {
 const updateTranslation = (_id, translation) => {
   return axios.put(`${Url}/api/translation/${_id}`, translation)
 }
+
 export {
   getTranslations,
   getActiveProjects,
