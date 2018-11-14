@@ -1,0 +1,82 @@
+{
+  "ui": {
+    "common": {
+      "action": "動作",
+      "add": "新增",
+      "applyto": "套用至",
+      "cancel": "取消",
+      "close": "關閉",
+      "delete": "刪除",
+      "desc": "描述",
+      "download": "下載",
+      "edit": "編輯",
+      "file": "檔案",
+      "goBack": "返回",
+      "history": "檢視歷史記錄",
+      "import": "匯入",
+      "language": "語言",
+      "locale": "語系",
+      "locales": "語系",
+      "merge": "合併",
+      "or": "或",
+      "others": "和其他 {0} 個",
+      "reload": "重新載入",
+      "reset": "還原",
+      "update": "更新"
+    },
+    "confirm": {
+      "continue": "您確定要繼續嗎 ?",
+      "delete": "您確定要刪除 \"{0}\" 嗎?",
+      "header": "確認",
+      "no": "否",
+      "yes": "是"
+    },
+    "err": {
+      "belongsTo": "【JSON::ParserError】\"{0}\" 與 {1}* 在 {2} 衝突",
+      "contains": "【JSON::ParserError】\"{0}\" 與 \"{1}\" 在 {2} 衝突",
+      "emptyfield": "以下欄位為必填: {0}",
+      "equals": "\"{0}\" 已經存在於以下專案: {1}",
+      "iconflicts": "以下這些 key 會在解析 JSON 時發生錯誤:",
+      "iequals": "以下這些 key 會覆蓋掉已經存在的翻譯:"
+    },
+    "file": {
+      "accept": "僅接受 {0} 的檔案格式。",
+      "select": "請將您的語系檔拖曳至此，或點擊此區以選取要匯入的檔案。",
+      "selected": "您選取的檔案:"
+    },
+    "grid": {
+      "edit": "雙擊儲存格可進行編輯；鍵入 Enter 以送出更新",
+      "empty": "無資料",
+      "search": "關鍵字搜尋"
+    },
+    "history": {
+      "add": "新增",
+      "at": "於",
+      "delete": "刪除",
+      "edit": "編輯",
+      "import": "匯入",
+      "merge": "合併",
+      "none": "無此翻譯的歷史記錄。"
+    },
+    "json": {
+      "format": "格式化",
+      "mini": "最小化"
+    },
+    "merge": {
+      "match": "以下這些 key 將會被合併:",
+      "nomatch": "無符合合併條件的資料"
+    },
+    "pagination": {
+      "next": "下一頁",
+      "of": "/",
+      "page": "頁",
+      "previous": "上一頁",
+      "rows": "筆"
+    },
+    "tip": {
+      "dataChanged": "資料已經被其他人異動過",
+      "iconflicts": "(例) 在解析成 JSON 格式時，ui.common.add 會與 ui、ui.common、ui.common.add.* 等 key 發生衝突。",
+      "iequals": "出現這個錯誤表示，這些 key 在您選取的專案中已經存在，而且選取的語系也已經有對應的翻譯。"
+    }
+  }
+}
